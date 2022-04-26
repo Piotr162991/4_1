@@ -5,6 +5,7 @@ import java.io.IOException;
 class WrongStudentName extends Exception { }
 class WrongStudentAge extends Exception { }
 class WrongStudentDate extends Exception { }
+class WrongSelect extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -32,16 +33,24 @@ class Main {
               {
                 System.out.println("Błędna data urodzenia studenta!");
               }
+          catch(WrongSelect e)
+              {
+                System.out.println("Zły wybór");
+              }
         }
     }
 
-    public static int menu() {
+    public static int menu() throws WrongSelect {
         System.out.println("Wciśnij:");
         System.out.println("1 - aby dodać studenta");
         System.out.println("2 - aby wypisać wszystkich studentów");
         System.out.println("3 - aby wyszukać studenta po imieniu");
         System.out.println("0 - aby wyjść z programu");
-        return scan.nextInt();
+      int wybor= scan.nextInt();
+      
+      if((wybor<0)||(wybor>3))
+        throw new WrongSelect();
+      return wybor;
     }
 
     public static String ReadName() throws WrongStudentName {
@@ -55,6 +64,7 @@ class Main {
     }
 
     public static void exercise1() throws IOException, WrongStudentName, WrongStudentAge, WrongStudentDate {
+      
         var name = ReadName();
         System.out.println("Podaj wiek: ");
         var age = scan.nextInt();
